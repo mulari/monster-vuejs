@@ -3,6 +3,8 @@ new Vue({
     data: {
         playerHealth: 100,
         monsterHealth: 100,
+        specialAttackBar: 0,
+        healingPotions: 3,
         gameIsRunning: false,
         turns: []
     },
@@ -11,10 +13,12 @@ new Vue({
             this.gameIsRunning = true;
             this.playerHealth = 100;
             this.monsterHealth = 100;
+            this.specialAttackBar = 0;
+            this.healingPotions = 3;
             this.turns = [];
         },
         attack: function() {
-
+            var specialAttackBar = 0;
             // Human damage
             var damage = this.calculateDamage(3, 10);
             this.monsterHealth -= damage;
@@ -29,23 +33,53 @@ new Vue({
 
             //Monster damage
             this.monsterAttacks();
-
+            
             this.checkWin();
+            this.isSpecialAttackFull();
 
         },
+        isSpecialAttackFull: function() {
+            if (this.specialAttackBar < 5) {
+                this.specialAttackBar++;
+                return false;
+            } else {
+                return true;
+            }
+   
+        },
         specialAttack: function() {
-            var damage = this.calculateDamage(10, 20)
-            this.monsterHealth -= damage
-            this.turns.unshift({
-                isPlayer: true,
-                text: 'Player uses special attack for ' + damage + ' damage!'
-            });
+            if (!this.isSpecialAttackFull()) {
+                alert("You can't use your special attack yet! " + this.specialAttackBar + "/5");
+                this.monsterAttacks();
+                return;
+            } else {
+                alert("You use special attack!")
+                var damage = this.calculateDamage(10, 20)
+                this.monsterHealth -= damage
+                this.turns.unshift({
+                    isPlayer: true,
+                    text: 'Player uses special attack for ' + damage + ' damage!'
+                });
+                this.specialAttackBar = 0;
+                this.monsterAttacks();
+            }
+            
             if (this.checkWin()) {
                 return;
             }
-            this.monsterAttacks();
+            
+        },
+        checkHealingAvailable: function() {
+            if (this.healingPotions == 0) {
+                alert("You don't have healing potions left!")
+                this.monsterAttacks();
+                return true;
+            } else {
+                return false;
+            }
         },
         heal: function() {
+            if (this.checkHealingAvailable()) return;
             if (this.playerhealth <= 90) {
                 this.playerHealth += 10;
             } else {
@@ -56,6 +90,7 @@ new Vue({
                 text: 'Player heals for 10 HP'
             });
             this.monsterAttacks();
+            this.healingPotions--;
         },
         giveUp: function() {
             this.gameIsRunning = false;
