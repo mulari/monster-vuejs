@@ -26,6 +26,7 @@ new Vue({
                 isPlayer: true,
                 text: 'Player hits Monster for ' + damage
             });
+
             //Check if we won
             if (this.checkWin()) {
                 return;
@@ -33,14 +34,12 @@ new Vue({
 
             //Monster damage
             this.monsterAttacks();
-            
-            this.checkWin();
             this.isSpecialAttackFull();
-
+            this.checkWin();
         },
         isSpecialAttackFull: function() {
-            if (this.specialAttackBar < 5) {
-                this.specialAttackBar++;
+            if (this.specialAttackBar < 100) {
+                this.specialAttackBar = this.specialAttackBar + 20;
                 return false;
             } else {
                 return true;
@@ -49,11 +48,14 @@ new Vue({
         },
         specialAttack: function() {
             if (!this.isSpecialAttackFull()) {
-                alert("You can't use your special attack yet! " + this.specialAttackBar + "/5");
+                 this.turns.unshift({
+                isPlayer: true,
+                text: "You can't use special attack yet!"
+            });
                 this.monsterAttacks();
                 return;
             } else {
-                alert("You use special attack!")
+
                 var damage = this.calculateDamage(10, 20)
                 this.monsterHealth -= damage
                 this.turns.unshift({

@@ -10,6 +10,31 @@
     transition: width 500ms;
 }
 
+.specialAttackBar {
+    width: 80%;
+    height: 20px;
+    background-color: rgba(238, 238, 238, 0.432);
+    margin: auto;
+    transition: width 1000ms;
+    text-align: center;
+
+}
+
+.potions {
+    height: 20px;
+    margin: auto;
+
+}
+
+.potion {
+    display: inline-block;
+    margin: 10px;
+    border: 1px solid black;
+    height: 20px;
+    width: 20px;
+    background-color: blue;
+}
+
 .controls, .log {
     margin-top: 30px;
     text-align: center;
