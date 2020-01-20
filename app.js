@@ -85,11 +85,11 @@ new Vue({
             if (this.playerhealth <= 90) {
                 this.playerHealth += 10;
             } else {
-                this.playerHealth = 100;
+                this.playerHealth += 15;
             }
             this.turns.unshift({
                 isPlayer: true,
-                text: 'Player heals for 10 HP'
+                text: 'Player used healing potion.'
             });
             this.monsterAttacks();
             this.healingPotions--;
