@@ -1,3 +1,3 @@
 # monster-vuejs
 
-Simple Monster Game created with VueJS. Demo at https://koodiukot.com/
+Simple Monster Game created with VueJS. Demo at https://koodiukot.com/monster-vuejs/
